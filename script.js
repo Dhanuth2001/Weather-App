@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetchWeatherData("New York");
+    fetchWeatherData("new york");
+
     document.getElementById("searchButton").addEventListener("click", function() {
         searchWeather();
     });
@@ -11,7 +12,6 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
-                    alert("Please enter a correct location.");
                     throw new Error("Network response was not ok");
                 }
                 return response.json();
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => {
                 console.error("There was a problem fetching the weather data:", error);
+                alert("Please enter a correct location.");
             });
     }
 
@@ -36,12 +37,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function setBackground(weatherCondition) {
+        console.log(weatherCondition);
         const body = document.querySelector("body");
         switch (weatherCondition) {
             case "Clear":
                 body.style.backgroundImage = "url('images/clear.jpg')";
                 break;
             case "Clouds":
+            case "Mist":    
                 body.style.backgroundImage = "url('images/cloudy-weather.jpg')";
                 break;
             case "Rain":
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 body.style.backgroundImage = "url('images/snow.jpg')";
                 break;
             default:
-                
+                body.style.backgroundImage = ""; // Reset background image if no condition matches
                 break;
         }
     }
